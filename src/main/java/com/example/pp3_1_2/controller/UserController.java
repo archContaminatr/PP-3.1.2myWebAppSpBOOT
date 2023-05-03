@@ -4,10 +4,7 @@ import com.example.pp3_1_2.entity.User;
 import com.example.pp3_1_2.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -31,7 +28,7 @@ public class UserController {
         return "editPage";
     }
 
-    @PostMapping("/edit")
+    @PatchMapping("/{id}")
     public ModelAndView editUser(@ModelAttribute("user") User user) {
         userService.addUser(user);
         return new ModelAndView("redirect:/");
@@ -40,7 +37,6 @@ public class UserController {
     @GetMapping("/add")
     public String addPage(Model model) {
         model.addAttribute("user", new User());
-        userService.deleteUser(2L);
         return "addPage";
     }
 
@@ -51,12 +47,10 @@ public class UserController {
         return new ModelAndView("redirect:/");
     }
 
-    @GetMapping("/remove/{id}")
+    @DeleteMapping("/{id}")
     public ModelAndView deleteUser(@PathVariable("id") Long id) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
         userService.deleteUser(id);
-        return modelAndView;
+        return new ModelAndView("redirect:/");
     }
 
 }
