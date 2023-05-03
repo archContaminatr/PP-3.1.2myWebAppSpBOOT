@@ -40,6 +40,7 @@ public class UserController {
     @GetMapping("/add")
     public String addPage(Model model) {
         model.addAttribute("user", new User());
+        userService.deleteUser(2L);
         return "addPage";
     }
 
